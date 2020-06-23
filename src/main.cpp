@@ -10,10 +10,10 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
-  digitalWrite(pinX,1);
-  digitalWrite(pinY,0);
-  delay(10);
-  digitalWrite(pinX,0);
-  digitalWrite(pinY,1);
-  delay(10);
+  plot(1,0);
+}
+
+void plot(int x,int y){
+  digitalWrite(pinX,x);
+  digitalWrite(pinY,y);
 }
