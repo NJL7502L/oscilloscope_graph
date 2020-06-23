@@ -8,12 +8,12 @@ void setup() {
   pinMode(pinY,OUTPUT);
 }
 
-void loop() {
-  // put your main code here, to run repeatedly:
-  plot(1,0);
-}
-
 void plot(int x,int y){
   digitalWrite(pinX,x);
   digitalWrite(pinY,y);
+}
+
+void loop() {
+  // put your main code here, to run repeatedly:
+  plot(1,0);
 }
