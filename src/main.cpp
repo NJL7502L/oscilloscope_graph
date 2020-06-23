@@ -15,5 +15,5 @@ void plot(int x,int y){
 
 void loop() {
   // put your main code here, to run repeatedly:
-  plot(1,0);
+  plot(1,1);
 }
