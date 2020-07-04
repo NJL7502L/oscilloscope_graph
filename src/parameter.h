@@ -4,5 +4,5 @@
 // Device
 const int pinX = 3;
 const int pinY = 4;
-
+double counter = 0; 
 #endif

@@ -1,9 +1,23 @@
- #include <Arduino.h>
+#include <Arduino.h>
+#include <MsTimer2.h> 
 #include "parameter.h"
+
+void flash() {
+  if (counter > 1){
+    counter = 0;
+  }else{
+    counter += 0.001;
+  }
+
+  digitalWrite(LED_BUILTIN,!digitalRead(LED_BUILTIN));
+}
 
 void setup() {
   pinMode(pinX,OUTPUT);
   pinMode(pinY,OUTPUT);
+  analogWrite(LED_BUILTIN,OUTPUT);
+  MsTimer2::set(100, flash);
+  MsTimer2::start();
 }
 
 void plot(float x,float y){
@@ -43,15 +57,5 @@ double plotfunction(double x){
 
 
 void loop() {
-  // put your main code here, to run repeatedly:
-  static double counter = 0; 
   plot(counter,plotfunction(counter));
-  delay(100);
-  if (counter > 1){
-    counter = 0;
-  }else{
-    counter += 0.001;
-  }
-
-  digitalWrite(LED_BUILTIN,!digitalRead(LED_BUILTIN));
 }
