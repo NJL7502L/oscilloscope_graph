@@ -36,7 +36,7 @@ void setup() {
   pinMode(pinY,OUTPUT);
   analogWrite(LED_BUILTIN,OUTPUT);
   plot(targetPoint[0].x,targetPoint[0].y);
-  delay(1000);
+  delay(5000);
 }
 
 void loop() {
@@ -74,9 +74,9 @@ void loop() {
     while(pointer < dist){
       plot(movingPointer.x,movingPointer.y);
       
-      movingPointer.x += 0.01 * cos(theta);
-      movingPointer.y += 0.01 * sin(theta);
-      pointer += 0.01;
+      movingPointer.x += 0.001 * cos(theta);
+      movingPointer.y += 0.001 * sin(theta);
+      pointer += 0.001;
       delay(500);
     }
   }
