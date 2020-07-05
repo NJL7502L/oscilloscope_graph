@@ -1,23 +1,34 @@
 #include <Arduino.h>
-#include <MsTimer2.h> 
 #include "parameter.h"
 
-void flash() {
-  if (counter > 1){
-    counter = 0;
-  }else{
-    counter += 0.001;
-  }
+class Vect{
+public:
+  double x;
+  double y;
+};
 
-  digitalWrite(LED_BUILTIN,!digitalRead(LED_BUILTIN));
-}
+Vect targetPoint[] = {
+  {0    ,0.5  },
+  {0.1  ,0.5  },
+  {0.1  ,0.6  },
+  {0.2  ,0.6  },
+  {0.2  ,0.4  },
+  {0.25 ,0.5  },
+  {0.6  ,0.5  },
+  {0.6  ,0    },
+  {0.65 ,0.5  },
+  {0.7  ,0.5  },
+  {0.7  ,0.6  },
+  {0.85 ,0.7  },
+  {0.85 ,0.7  },
+  {0.95 ,0.9  },
+  {1    ,1    }
+};
 
 void setup() {
   pinMode(pinX,OUTPUT);
   pinMode(pinY,OUTPUT);
   analogWrite(LED_BUILTIN,OUTPUT);
-  MsTimer2::set(100, flash);
-  MsTimer2::start();
 }
 
 void plot(float x,float y){
@@ -27,35 +38,35 @@ void plot(float x,float y){
   analogWrite(pinY,outY);
 }
 
-double plotfunction(double x){
-  if(x < 0 || x > 1){
-    return 0;
-  }
-  double val = 0;
-  if(x<0.1){
-    val = 0.5;
-  }else if(x < 0.2){
-    val = 0.6;
-  }else if(x<0.25){
-    val = 0.4 + (x-0.2)*(0.1/0.05);
-  }else if(x < 0.6){
-    val = 0.5;
-  }else if(x < 0.65){
-    val = 0 + (x-0.6) * (0.5/0.05);
-  }else if(x < 0.7){
-    val = 0.5;
-  }else if(x < 0.85){
-    val = 0.6 +(x-0.7) * (0.1/0.15);
-  }else if(x < 0.95){
-    val = 0.8 + (x-0.85) * (0.1/0.1);
-  }else{
-    val = 1;
-  }
-
-  return constrain(val, 0, 1);
-}
-
-
 void loop() {
-  plot(counter,plotfunction(counter));
+  double dist = 0;
+  double pointer = 0;
+
+  for(int i = 0; i < sizeof(targetPoint) / sizeof(targetPoint[0]); i++){
+
+    Vect diff;
+    diff.x = targetPoint[i+1].x - targetPoint[i].x;
+    diff.y = targetPoint[i+1].y - targetPoint[i].y;
+    double a;
+    if(diff.x == 0){
+      a = 1;
+    }else{
+      a = diff.y/diff.x;
+    }
+    double theta = atan(a);
+    dist += hypot(diff.x, diff.y);
+
+    Vect movingPointer;
+    movingPointer.x = targetPoint[i].x;
+    movingPointer.y = targetPoint[i].y;
+
+    while(pointer < dist){
+      plot(movingPointer.x,movingPointer.y);
+      
+      movingPointer.x += 0.01 * cos(theta);
+      movingPointer.y += 0.01 * sin(theta);
+      pointer += 0.01;
+      delay(500);
+    }
+  }
 }
