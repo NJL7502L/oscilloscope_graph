@@ -24,17 +24,19 @@ Vect targetPoint[] = {
   {1    ,1    }
 };
 
-void setup() {
-  pinMode(pinX,OUTPUT);
-  pinMode(pinY,OUTPUT);
-  analogWrite(LED_BUILTIN,OUTPUT);
-}
-
 void plot(float x,float y){
   float outX = map(x*100,100,0,0,255);
   float outY = map(y*100,100,0,0,255);
   analogWrite(pinX,outX);
   analogWrite(pinY,outY);
+}
+
+void setup() {
+  pinMode(pinX,OUTPUT);
+  pinMode(pinY,OUTPUT);
+  analogWrite(LED_BUILTIN,OUTPUT);
+  plot(targetPoint[0].x,targetPoint[0].y);
+  delay(1000);
 }
 
 void loop() {
