@@ -20,7 +20,7 @@ Vect targetPoint[] = {
   {0.7  ,0.5  },
   {0.7  ,0.6  },
   {0.85 ,0.7  },
-  {0.85 ,0.7  },
+  {0.85 ,0.8  },
   {0.95 ,0.9  },
   {1    ,1    }
 };
@@ -49,7 +49,14 @@ void loop() {
     diff.y = targetPoint[i+1].y - targetPoint[i].y;
     double a;
     if(diff.x == 0){
-      a = 1;
+      if(diff.y > 0){
+        a = 100000;
+      }else if(diff.y < 0){
+        a = -100000;
+      }else{
+        a = 0;
+      }
+
     }else{
       a = diff.y/diff.x;
     }
