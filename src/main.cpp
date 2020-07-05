@@ -16,7 +16,6 @@ Vect targetPoint[] = {
   {0.25 ,0.5  },
   {0.6  ,0.5  },
   {0.6  ,0    },
-  {0.65 ,0.5  },
   {0.7  ,0.5  },
   {0.7  ,0.6  },
   {0.85 ,0.7  },
@@ -39,6 +38,9 @@ void plot(float x,float y){
 }
 
 void loop() {
+  // while(1){
+  //   plot(0.5,0.5);
+  // }
   double dist = 0;
   double pointer = 0;
 
